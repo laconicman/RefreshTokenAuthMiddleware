@@ -89,7 +89,7 @@ import Foundation
 
 struct OuterClient: Sendable {
     let client: Client
-    private let bearerAuthMiddleware: BearerAuthMiddleware<Client>
+    private let refreshTokenAuthMiddleware: RefreshTokenAuthMiddleware<Client>
     // private var auth: Components.Schemas.Auth?
     init?(credentials: Credentials) {
         guard let serverURL = try? Servers.Server1.url() else { return nil}
@@ -97,11 +97,11 @@ struct OuterClient: Sendable {
             serverURL: serverURL,
             transport: URLSessionTransport()
         )
-        bearerAuthMiddleware = BearerAuthMiddleware(authManagementClient: authManagementClient, credentials: credentials)
+        refreshTokenAuthMiddleware = RefreshTokenAuthMiddleware(authManagementClient: authManagementClient, credentials: credentials)
         self.client = Client(
             serverURL: serverURL,
             transport: URLSessionTransport(),
-            middlewares: [bearerAuthMiddleware]
+            middlewares: [refreshTokenAuthMiddleware]
         )
     }
 }
