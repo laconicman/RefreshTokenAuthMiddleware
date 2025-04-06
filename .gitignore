@@ -1,0 +1,59 @@
+### Swift Package Manager ###
+.build/
+.swiftpm/
+Package.resolved
+*.xcodeproj
+.netrc
+.derivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+### Xcode ###
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+### IDE ###
+.idea/
+.vscode/
+*.swp
+*.swo
+
+### Documentation ###
+.docc-build/
+docs/api/
+docs/output/
+
+### Build and Test ###
+.ci/
+build/
+coverage.xml
+*.coverage
+*.lcov
+.build-output/
+
+### Other ###
+*.log
+.env
+.env.*
