@@ -2,12 +2,13 @@ import Foundation
 import OpenAPIRuntime
 import HTTPTypes
 
-// Ensures that only one signIn or refresh operation is held at a time.
+// Ensures that only one signIn or refresh operation is executed at a time.
 // See: https://www.donnywals.com/building-a-token-refresh-flow-with-async-await-and-swift-concurrency/
-// There is also totally different approach with recreating `Client` before each request.
+// There is also a totally different approach with recreating `Client` before each request.
 // See: https://github.com/luomein/authenticate-any-api
 // TODO: We have double assignments for `accessToken` and `refreshToken` in couple of places.
 // Consider unifying. Ether only update state and use state, either update state at upper levels only.
+// TODO: Consider putting a limit on how many times refresh token queries can be retried.
 
 actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
     private let authManagementClient: C // A client for the same OpenAPI spec, but with no auth middleware
@@ -19,7 +20,7 @@ actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
     private var refreshTask: Task<C.Token, Error>?
     // We could init with auth logic instead of demanding it in conformance.
     // private let authorizeRequest: (HTTPRequest, C.Token) throws -> HTTPRequest
-    // But we need use `authManagementClient` anyway, to make auth requests, so such coupling looks fine.
+    // But we need use the `authManagementClient` anyway, to make auth requests, so such coupling looks fine.
     
     init(authManagementClient: C, credentials: C.Credentials) {
         self.authManagementClient = authManagementClient
@@ -97,6 +98,8 @@ actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
         // Try the request with the current token
         let (response, responseBody) = try await next(modifiedRequest, body, baseURL)
         
+        // TODO: Handle other auth failing indicators in response that may differ from service to service.
+        // For example, user credits could have been expired, and refresh token and re-sighIn won't not help them to authorize.
         if response.status == .unauthorized {
             do {
                 // Recreate the request body if needed
