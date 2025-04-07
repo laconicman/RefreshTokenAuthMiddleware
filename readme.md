@@ -3,7 +3,7 @@
 [![Swift Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Flaconicman%2FRefreshTokenAuthMiddleware%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/laconicman/RefreshTokenAuthMiddleware)
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Flaconicman%2FRefreshTokenAuthMiddleware%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/laconicman/RefreshTokenAuthMiddleware)
 
-An auth middleware package for [Swift OpenAPI Generator/Runtime](https://github.com/apple/swift-openapi-generator) for a common scenario dealing with long-living refresh token and shot-living access token.
+An auth middleware package for [Swift OpenAPI Generator/Runtime](https://github.com/apple/swift-openapi-generator) for a common scenario dealing with long-living refresh token and short-living access token.
 The library is quite universal in and can cover most of such cases.
 
 ## Features
@@ -40,11 +40,12 @@ targets: [
 
 ## Usage
 
-### For generated with Swift OpenAPI Generator `Client` implement conformance to `SignInAndRefresh` protocol.
+### For "Client" generated with Swift OpenAPI Generator, implement conformance to "SignInAndRefresh" protocol.
+This will define the logic of specific authentication queries, their results, and token validation.
 
 ``` swift
 import Foundation
-import HTTPTypes // Gonna need this only if we will modify requests inside those funcs of `ClientWithSignIn` protocol
+import HTTPTypes // Gonna need this to modify requests inside those funcs of `SignInAndRefresh` protocol.
 
 extension Client: SignInAndRefresh {
     typealias Token = String
@@ -107,7 +108,7 @@ struct OuterClient: Sendable {
 }
 
 let client = OuterClient(credentials: .init())
-// Authorization is fully automatic by now. But if we do sign in there will be no extra re-auth request.
+// Authorization is fully automatic by now. But if we do sign in there should be no extra re-auth request.
 // let authorizationResponse = try await client?.client.signIn(credentials: .init())
 // print(authorizationResponse ?? "No auth response")
 let adminUsersResponse = try await client?.listGoods(body: .json(.init(limit: 10, offset: 0, page: 1, filter: "", order: .init(id: "asc"))))
@@ -118,7 +119,7 @@ print(adminUsersResponse ?? "No admin users response")
 
 Contributions and are welcome!
 
-## This is helper package for the following 
+## This is a helper package for the following 
 
 - [swift-openapi-generator](https://github.com/apple/swift-openapi-generator) - The main Swift OpenAPI Generator project
 - [swift-openapi-runtime](https://github.com/apple/swift-openapi-runtime) - Runtime library for Swift OpenAPI Generator
