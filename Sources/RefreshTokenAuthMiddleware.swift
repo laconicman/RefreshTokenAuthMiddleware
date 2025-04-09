@@ -10,7 +10,7 @@ import HTTPTypes
 // Consider unifying. Ether only update state and use state, either update state at upper levels only.
 // TODO: Consider putting a limit on how many times refresh token queries can be retried.
 
-actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
+public actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
     private let authManagementClient: C // A client for the same OpenAPI spec, but with no auth middleware
     private let credentials: C.Credentials
     private var accessToken: C.Token?
@@ -81,7 +81,7 @@ actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
     ///   - next: A closure that calls the next middleware, or the transport.
     /// - Returns: An HTTP response and its body.
     /// - Throws: An error if interception of the request and response fails.
-    func intercept(
+    public func intercept(
         _ request: HTTPRequest,
         body: HTTPBody?,
         baseURL: URL,

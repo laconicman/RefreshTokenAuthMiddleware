@@ -1,7 +1,7 @@
 import OpenAPIRuntime
 import HTTPTypes
 
-protocol SignInAndRefresh: Sendable {
+public protocol SignInAndRefresh: Sendable {
     associatedtype Credentials: Sendable
     associatedtype Token: Sendable
     associatedtype RefreshToken: Sendable

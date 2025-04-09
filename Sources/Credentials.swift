@@ -1,12 +1,16 @@
+// This is just a boilerplate for implementing
+// `Credentials` that can be picked from environment.
+// Also good for debugging. Environment settings can be set `.gitignore`-d, so they won't leak.
+/*
 import Foundation
 
-struct Credentials: Sendable {
+public struct Credentials: Sendable {
     let username: String
     let password: String
 }
 
 extension Credentials {
-    init() {
+    public init() {
         guard let username = ProcessInfo.processInfo.environment["APP_USERNAME"] else {
             fatalError("APP_USERNAME environment variable is not set. You can set with `Edit sheme`.")
         }
@@ -17,3 +21,4 @@ extension Credentials {
         self.password = password
     }
 }
+*/
