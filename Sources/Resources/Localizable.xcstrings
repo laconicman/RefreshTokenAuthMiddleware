@@ -1,0 +1,17 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Missing refresh token. Please try to login again." : {
+      "comment" : "RefreshTokenAuthMiddleware.AuthError",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отсутствует токен обновления. Пожалуйста, попробуйте войти в систему еще раз."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

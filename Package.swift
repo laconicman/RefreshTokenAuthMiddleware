@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "RefreshTokenAuthMiddleware",
+    defaultLocalization: "en",
     platforms: [.macOS(.v12), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .visionOS(.v1)],
     products: [
         .library(
