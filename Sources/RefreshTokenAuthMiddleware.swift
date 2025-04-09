@@ -22,7 +22,7 @@ public actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
     // private let authorizeRequest: (HTTPRequest, C.Token) throws -> HTTPRequest
     // But we need use the `authManagementClient` anyway, to make auth requests, so such coupling looks fine.
     
-    init(authManagementClient: C, credentials: C.Credentials) {
+    public init(authManagementClient: C, credentials: C.Credentials) {
         self.authManagementClient = authManagementClient
         self.credentials = credentials
     }
@@ -122,10 +122,10 @@ public actor RefreshTokenAuthMiddleware<C: SignInAndRefresh>: ClientMiddleware {
     
 }
 
-extension RefreshTokenAuthMiddleware {
+public extension RefreshTokenAuthMiddleware {
     enum AuthError: LocalizedError {
         case missingRefreshToken
-        var errorDescription: String? {
+        public var errorDescription: String? {
             switch self {
                 case .missingRefreshToken: String(localized: "Missing refresh token. Please try to login again.", comment: "RefreshTokenAuthMiddleware.AuthError")
             }
